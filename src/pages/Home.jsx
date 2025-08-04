@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Footer from '../components/Footer';
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-white transition-all duration-300 ease-in-out">
-      {/* Hero Section */}
+     
       <section className="flex-grow flex items-center justify-center text-center px-6 py-20 bg-gradient-to-br from-violet-50 to-slate-100 dark:from-slate-800 dark:to-slate-700">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -37,7 +38,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Features Section */}
+    
       <section className="py-20 bg-white dark:bg-slate-900">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
           {[
@@ -71,7 +72,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Call to Action */}
+      
       <section className="bg-violet-700 dark:bg-violet-600 text-white py-16 text-center px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -90,7 +91,10 @@ export default function Home() {
             Get Started Now
           </Link>
         </motion.div>
+
       </section>
+
+        <Footer/>
     </div>
   );
 }

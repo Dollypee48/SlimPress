@@ -14,6 +14,10 @@ export default function Compress() {
   const [format, setFormat] = useState('jpeg');
   const { compressedImages, compressImages, isCompressing } = useImageCompressor();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleFiles = (selectedFiles) => setFiles(selectedFiles);
   const handleControlsChange = ({ quality, isLossless }) => {
     setQuality(quality);
@@ -23,52 +27,53 @@ export default function Compress() {
     compressImages(files, quality, isLossless, format);
   };
 
-  // Fix for navbar overlap: scroll to top and add top padding
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
-    <main className="pt-24 min-h-screen w-full bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 transition-all duration-300 px-4 pb-16">
+    <main className="pt-24 min-h-screen w-full bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 transition-all duration-300 px-4 pb-20">
       <div className="max-w-6xl mx-auto">
-        {/* Page Header */}
-        <header className="mb-12 text-center">
+       
+        <header className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-800 dark:text-slate-100">
             Compress Your Images Efficiently
           </h1>
-          <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
-            Upload your images, adjust compression settings, and download optimized results.
+          <p className="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+            Upload images, fine-tune compression settings, and download high-quality optimized results.
           </p>
         </header>
 
-        {/* Compression Tool Card */}
-        <section className="space-y-8 bg-white dark:bg-slate-900 shadow-xl rounded-2xl p-6 md:p-10">
+       
+        <section className="space-y-10 bg-white dark:bg-slate-900 shadow-2xl rounded-3xl p-6 md:p-10 transition-all">
+        
           <ImageUploader onFilesSelected={handleFiles} />
 
-          <CompressionControls
-            onChange={handleControlsChange}
-            quality={quality}
-            isLossless={isLossless}
-          />
+        
+          <div className="grid md:grid-cols-2 gap-6">
+            <CompressionControls
+              onChange={handleControlsChange}
+              quality={quality}
+              isLossless={isLossless}
+            />
+            <OutputSettings format={format} onFormatChange={setFormat} />
+          </div>
 
-          <OutputSettings format={format} onFormatChange={setFormat} />
-
-          <div className="flex justify-center">
+    
+          <div className="flex justify-center pt-4">
             <button
               onClick={handleCompress}
               disabled={!files.length || isCompressing}
-              className="px-6 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-8 py-3 rounded-xl bg-green-600 text-white text-lg font-semibold hover:bg-green-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isCompressing ? 'Compressing...' : 'Compress Images'}
             </button>
           </div>
 
           {compressedImages.length > 0 && (
-            <>
+            <div className="space-y-10">
               <ImagePreview images={compressedImages} />
               <PreviewComparison images={compressedImages} />
-              <DownloadAllButton images={compressedImages} format={format} />
-            </>
+              <div className="flex justify-center">
+                <DownloadAllButton images={compressedImages} format={format} />
+              </div>
+            </div>
           )}
         </section>
       </div>
